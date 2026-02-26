@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <canvas id="galaxy"></canvas>
+
+<div class="form-container">
+  <h2>Login</h2>
+  {% if error %}
+<p style="color:red; margin-bottom:15px;">
+  {{ error }}
+</p>
+{% endif %}
+  <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+
+  <p style="margin-top:15px;">
+    Not registered?
+    <a href="/register" style="color:#74ebd5; font-weight:bold;">
+      Create Account
+    </a>
+  </p>
+</div>
+
+<script>
+const canvas = document.getElementById("galaxy");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+let nebulaOffset = 0;
+
+/* Create soft stars */
+function createStars() {
+    stars = [];
+    for (let i = 0; i < 200; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 1.5,
+            opacity: Math.random()
+        });
+    }
+}
+
+/* Draw calm background */
+function draw() {
+
+    /* Soft Purple Gradient */
+    let gradient = ctx.createRadialGradient(
+        canvas.width / 2,
+        canvas.height / 2,
+        0,
+        canvas.width / 2,
+        canvas.height / 2,
+        canvas.width
+    );
+
+    gradient.addColorStop(0, "rgba(120, 0, 255, 0.2)");
+    gradient.addColorStop(0.5, "rgba(40, 0, 80, 0.6)");
+    gradient.addColorStop(1, "black");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    /* Twinkling Stars */
+    stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255," + star.opacity + ")";
+        ctx.fill();
+
+        star.opacity += (Math.random() - 0.5) * 0.02;
+        if (star.opacity < 0.1) star.opacity = 0.1;
+        if (star.opacity > 1) star.opacity = 1;
+    });
+
+    requestAnimationFrame(draw);
+}
+
+createStars();
+draw();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    createStars();
+});
+</script>
+</body>
+</html>

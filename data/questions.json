@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "year": 1974,
+    "question": "Who became the Prime Minister of India in 1974?",
+    "options": ["Indira Gandhi", "Jawaharlal Nehru", "Rajiv Gandhi", "Morarji Desai"],
+    "answer": "Indira Gandhi"
+  },
+  {
+    "id": 2,
+    "year": 1975,
+    "question": "The Emergency in India was declared in which year?",
+    "options": ["1972", "1973", "1975", "1977"],
+    "answer": "1975"
+  },
+  {
+    "id": 3,
+    "year": 1983,
+    "question": "Who won the Cricket World Cup 1983?",
+    "options": ["Australia", "England", "West Indies", "India"],
+    "answer": "India"
+  },
+  {
+    "id": 4,
+    "year": 1989,
+    "question": "Which year did the Berlin Wall fall?",
+    "options": ["1985", "1987", "1989", "1991"],
+    "answer": "1989"
+  },
+  {
+    "id": 5,
+    "year": 1991,
+    "question": "India’s economic liberalization started in which year?",
+    "options": ["1985", "1988", "1991", "1995"],
+    "answer": "1991"
+  },
+  {
+    "id": 6,
+    "year": 2000,
+    "question": "Which millennium did the year 2000 mark?",
+    "options": ["First", "Second", "Third", "Fourth"],
+    "answer": "Second"
+  },
+  {
+    "id": 7,
+    "year": 2014,
+    "question": "Who became the Prime Minister of India in 2014?",
+    "options": ["Rahul Gandhi", "Narendra Modi", "Manmohan Singh", "Amit Shah"],
+    "answer": "Narendra Modi"
+  },
+  {
+    "id": 8,
+    "year": 2020,
+    "question": "Which pandemic affected the world in 2020?",
+    "options": ["SARS", "Ebola", "COVID-19", "Zika"],
+    "answer": "COVID-19"
+  },
+  {
+  "id": 9,
+  "year": 2001,
+  "question": "Which event is associated with 11 September 2001?",
+  "options": [
+    "World Trade Center attacks",
+    "Gulf War",
+    "Cold War end",
+    "Berlin Wall construction"
+  ],
+  "answer": "World Trade Center attacks"
+},
+{
+  "id": 10,
+  "year": 2005,
+  "question": "Which country hosted the G20 Summit in 2005?",
+  "options": [
+    "India",
+    "USA",
+    "Germany",
+    "China"
+  ],
+  "answer": "Germany"
+},
+{
+  "id": 11,
+  "year": 2008,
+  "question": "Which global financial crisis occurred in 2008?",
+  "options": [
+    "Dot-com bubble",
+    "Great Depression",
+    "Global Financial Crisis",
+    "Oil Crisis"
+  ],
+  "answer": "Global Financial Crisis"
+}
+]

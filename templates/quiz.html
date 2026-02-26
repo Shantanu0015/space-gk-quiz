@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GK Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <canvas id="galaxy"></canvas>
+<!-- NAVBAR -->
+<nav>
+  <a href="/quiz">Quiz</a>
+  <a href="/logout">Logout</a>
+</nav>
+
+<h2 class="quiz-title">GK Quiz</h2>
+
+<!-- PROGRESS BAR -->
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<!-- QUIZ BOX -->
+<div class="quiz-container">
+  <form method="POST" action="/result" id="quizForm">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    {% for q in questions %}
+    <div class="question-block">
+
+      <!-- QUESTION -->
+      <p>
+        <strong>Q{{ loop.index }}.</strong>
+        {{ q.question }}
+      </p>
+
+      <!-- OPTIONS -->
+      {% for opt in q.options %}
+      <label>
+        <input type="radio"
+               name="{{ q.id }}"
+               value="{{ opt }}"
+               required>
+        {{ opt }}
+      </label>
+      {% endfor %}
+
+    </div>
+    {% endfor %}
+
+    <button type="submit">Submit Quiz</button>
+  </form>
+</div>
+
+<!-- PROGRESS BAR SCRIPT -->
+<script>
+const radios = document.querySelectorAll("input[type='radio']");
+const progressBar = document.getElementById("progressBar");
+const totalQuestions = Number("{{ questions|length }}");
+let answered = new Set();
+
+radios.forEach(radio => {
+  radio.addEventListener("change", function () {
+    answered.add(this.name);
+    let percent = (answered.size / totalQuestions) * 100;
+    progressBar.style.width = percent + "%";
+  });
+});
+</script>
+
+
+<script>
+const canvas = document.getElementById("galaxy");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+let shootingStars = [];
+let centerX = canvas.width / 2;
+let centerY = canvas.height / 2;
+let warpSpeed = 2;
+let warpMode = false;
+let nebulaPulse = 0;
+
+/* ===============================
+   STAR COLORS
+================================ */
+function randomStarColor() {
+    const colors = [
+        "#ffffff",   // white
+        "#ffe9a3",   // yellow
+        "#9fd3ff"    // blue
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+/* ===============================
+   CREATE STARS
+================================ */
+function createStars() {
+    stars = [];
+    for (let i = 0; i < 600; i++) {
+        stars.push({
+            x: Math.random() * canvas.width - centerX,
+            y: Math.random() * canvas.height - centerY,
+            z: Math.random() * canvas.width,
+            color: randomStarColor()
+        });
+    }
+}
+
+/* ===============================
+   SHOOTING STAR
+================================ */
+function createShootingStar() {
+    shootingStars.push({
+        x: Math.random() * canvas.width,
+        y: 0,
+        length: Math.random() * 120 + 30,
+        speed: 15,
+        opacity: 1
+    });
+}
+
+/* ===============================
+   DRAW ENGINE
+================================ */
+function draw() {
+
+    /* ===== PURPLE NEBULA BACKGROUND ===== */
+    let gradient = ctx.createRadialGradient(
+        centerX + Math.sin(nebulaPulse) * 50,
+        centerY + Math.cos(nebulaPulse) * 50,
+        0,
+        centerX,
+        centerY,
+        canvas.width
+    );
+
+    gradient.addColorStop(0, "rgba(150, 0, 255, 0.25)");
+    gradient.addColorStop(0.3, "rgba(80, 0, 180, 0.25)");
+    gradient.addColorStop(0.6, "rgba(20, 0, 60, 0.9)");
+    gradient.addColorStop(1, "black");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    nebulaPulse += 0.003;   // ← THIS animates the nebula
+
+
+    /* ===== 3D STAR WARP ===== */
+    stars.forEach(star => {
+        star.z -= warpSpeed;
+
+        if (star.z <= 0) {
+            star.z = canvas.width;
+        }
+
+        let k = 128.0 / star.z;
+        let x = star.x * k + centerX;
+        let y = star.y * k + centerY;
+
+        if (x >= 0 && x <= canvas.width && y >= 0 && y <= canvas.height) {
+            let size = (1 - star.z / canvas.width) * 4;
+
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fillStyle = star.color;
+            ctx.fill();
+
+            /* Hyperdrive streak */
+            if (warpMode) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x - star.x * 0.03, y - star.y * 0.03);
+                ctx.strokeStyle = star.color;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+    });
+
+
+    /* ===== SHOOTING STARS ===== */
+    shootingStars.forEach((star, index) => {
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length, star.y + star.length);
+        ctx.strokeStyle = "rgba(255,255,255," + star.opacity + ")";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        star.x += star.speed;
+        star.y += star.speed;
+        star.opacity -= 0.02;
+
+        if (star.opacity <= 0) {
+            shootingStars.splice(index, 1);
+        }
+    });
+
+    requestAnimationFrame(draw);
+}
+
+/* ===============================
+   HYPERDRIVE CLICK
+================================ */
+canvas.addEventListener("click", () => {
+    warpMode = !warpMode;
+    warpSpeed = warpMode ? 18 : 2;
+});
+
+/* ===============================
+   RESIZE
+================================ */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    centerX = canvas.width / 2;
+    centerY = canvas.height / 2;
+    createStars();
+});
+
+/* ===============================
+   START
+================================ */
+createStars();
+draw();
+setInterval(createShootingStar, 4000);
+</script>
+</body>
+</html>

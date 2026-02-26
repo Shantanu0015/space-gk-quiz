@@ -1,0 +1,331 @@
+/* =====================
+   GLOBAL RESET
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* =====================
+   BODY
+===================== */
+body {
+  background: #0d0d0d;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* =====================
+   NAVBAR
+===================== */
+nav {
+  background: #1a1a1a;
+  padding: 12px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* =====================
+   QUIZ TITLE (FIXED)
+===================== */
+.quiz-title {
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 0 0 15px rgba(180, 0, 255, 0.8);
+}
+
+/* =====================
+   FORM CONTAINER
+===================== */
+.form-container {
+  width: 360px;
+  margin: 100px auto;
+  padding: 35px;
+  border-radius: 15px;
+  text-align: center;
+  animation: popScale 0.7s ease;
+
+  background: #111;
+  border: 1px solid #00f0ff;
+  box-shadow: 0 0 20px #00f0ff55,
+              0 0 40px #00f0ff33;
+  color: white;
+}
+
+.form-container h2 {
+  margin-bottom: 30px;
+  font-size: 24px;
+  color: white;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+
+  background: #1a1a1a;
+  border: 1px solid #00f0ff;
+  color: white;
+}
+
+.form-container input:focus {
+  outline: none;
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  background: #00f0ff;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+.form-container button:hover {
+  transform: translateY(-2px);
+  background: white;
+  box-shadow: 0 0 20px white;
+}
+
+.form-container a {
+  color: #00f0ff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* =====================
+   QUIZ PAGE
+===================== */
+.quiz-container {
+  width: 750px;
+  margin: 40px auto;
+  padding: 35px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  animation: slideUp 0.8s ease;
+  color: #111;
+}
+
+.question-block {
+  background: #f9fefe;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  border-left: 6px solid #74ebd5;
+  transition: all 0.3s ease;
+  color: #111;
+}
+
+.question-block:hover {
+  transform: scale(1.01);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.question-block p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+.question-block label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.quiz-container button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  background: #74ebd5;
+  color: #111;
+  transition: 0.3s;
+}
+
+.quiz-container button:hover {
+  background: #5ad1c1;
+}
+
+/* =====================
+   RESULT PAGE
+===================== */
+.result-container {
+  width: 420px;
+  margin: 100px auto;
+  padding: 35px;
+  border-radius: 16px;
+  background: #ffffff;
+  text-align: center;
+  animation: popScale 0.8s ease;
+  color: #111;
+}
+
+.score {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+  animation: pulse 1.5s infinite;
+}
+
+.fail {
+  color: red;
+}
+
+/* =====================
+   LOADING TEXT
+===================== */
+.loading-text {
+  color: white;
+  font-size: 28px;
+  text-align: center;
+  margin-top: 120px;
+  font-weight: bold;
+}
+
+/* =====================
+   MILKY WAY BACKGROUND
+===================== */
+#galaxy {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: black;
+}
+
+/* =====================
+   ANIMATIONS
+===================== */
+@keyframes popScale {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+/* =====================
+   RESULT PAGE UPGRADE
+===================== */
+
+.result-title {
+  text-align: center;
+  margin-top: 30px;
+  color: white;
+  font-size: 28px;
+  text-shadow: 0 0 15px rgba(180, 0, 255, 0.8);
+}
+
+.result-card {
+  width: 500px;
+  margin: 40px auto;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 30px rgba(180, 0, 255, 0.4);
+
+  animation: popScale 0.8s ease;
+}
+
+.score-text {
+  font-size: 22px;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.score-value {
+  font-size: 30px;
+  font-weight: bold;
+  color: #00f0ff;
+  text-shadow: 0 0 20px #00f0ff;
+}
+
+/* Buttons container */
+.result-buttons {
+  margin-top: 20px;
+}
+
+/* Neon Button */
+.btn-neon {
+  display: inline-block;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 30px;
+  background: #00f0ff;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #00f0ff;
+}
+
+.btn-neon:hover {
+  background: white;
+  box-shadow: 0 0 25px white;
+  transform: scale(1.05);
+}
+
+/* Outline Button */
+.btn-outline {
+  display: inline-block;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 30px;
+  border: 2px solid #ff4dff;
+  color: #ff4dff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-outline:hover {
+  background: #ff4dff;
+  color: black;
+  box-shadow: 0 0 20px #ff4dff;
+  transform: scale(1.05);
+}
